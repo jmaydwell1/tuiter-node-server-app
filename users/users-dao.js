@@ -1,3 +1,4 @@
+import {v4 as uuid} from 'uuid';
 let users = [];
 
 
@@ -27,7 +28,7 @@ export const findUserByCredentials = (username, password) => {
 
 
 export const createUser = (user) => {
-    users.push(user)
+    users.push({...user, _id: uuid()})
     return users[users.length - 1]
 };
 
@@ -35,7 +36,7 @@ export const createUser = (user) => {
 export const updateUser = (uid, user) => {
  const index = users.findIndex((u) => u._id === uid);
  users[index] = { ...users[index], ...user };
- return {status: 'ok'}
+ return users[index];
 };
 export const deleteUser = (uid) => {
  const index = users.findIndex((u) => u._id === uid);

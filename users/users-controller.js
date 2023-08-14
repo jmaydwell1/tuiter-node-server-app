@@ -1,5 +1,5 @@
-import people from './users.js'
-let users = people
+import * as usersDao from "./users-dao.js";
+
 const UserController = (app) => {
    app.get('/api/users', findUsers)
    app.get('/api/users/:uid', findUserById);
@@ -11,12 +11,8 @@ const UserController = (app) => {
 const updateUser = (req, res) => {
     const userId = req.params['uid'];
     const updates = req.body;
-    users = users.map((usr) =>
-      usr._id === userId ?
-        {...usr, ...updates} :
-        usr
-    );
-    res.sendStatus(200);
+    const user = usersDao.updateUser(userId, updates);
+    res.json(user);
    }
    
    
